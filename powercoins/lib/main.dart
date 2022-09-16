@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:powercoins/telaCotacao.dart';
 import 'package:powercoins/telaMoedas.dart';
 
 void main() {
@@ -101,6 +102,22 @@ class telaLogin extends StatelessWidget{
                   child: const Text('Tela de moeda temporária'),
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: 
+              TextButton(
+                  style: TextButton.styleFrom(
+                    textStyle: TextStyle(color: Colors.white, fontSize: 15)   
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => telaCotacao()),
+                    );
+                  },
+                  child: const Text('Tela de cotacao temporaria'),
+              ),
+            ),
           ],
         ),
       ],
@@ -142,14 +159,15 @@ class logo extends StatelessWidget{
   Widget build(BuildContext context) {
     // TODO: implement build
    return Padding(
-                padding: EdgeInsets.only(top: 100, left: 150, right: 150, bottom: 10),
-                child: Image.asset('imagens/logo.jpg', width: 400, height: 100,),
+                padding: EdgeInsets.only(top: 100, left: 150, right: 150, bottom: 50),
+                child: Image.asset('imagens/logo.jpg'),
           );
   }
 }
 
 class telaEsqueciSenha extends StatelessWidget{
 
+  final TextEditingController controladorEmailTrocaSenha = TextEditingController();
   final TextEditingController controladorTrocaSenha = TextEditingController();
   final TextEditingController controladorTrocaSenhaConfirma = TextEditingController(); 
 
@@ -170,12 +188,13 @@ class telaEsqueciSenha extends StatelessWidget{
         Padding(
           padding: const EdgeInsets.fromLTRB(30.0, 8.0, 8.0, 8.0),
           child: Text(
-            'THE POWER OF COINS',
+            'REDEFINIR SENHA',
             overflow: TextOverflow.ellipsis,
             style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic,),
             textAlign: TextAlign.center,                      
           ),
         ),
+        Editor(controlador: controladorEmailTrocaSenha, label: 'E-mail', tipoSenha: false),
         Editor(controlador: controladorTrocaSenha, label: 'Nova senha', tipoSenha: true),
         Editor(controlador: controladorTrocaSenhaConfirma, label: 'Confima senha', tipoSenha: true),
         ElevatedButton(onPressed: (){

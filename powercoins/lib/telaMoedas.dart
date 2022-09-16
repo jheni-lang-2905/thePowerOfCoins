@@ -14,57 +14,37 @@ class telaMoedas extends StatelessWidget{
       ),
       home: Scaffold(
       backgroundColor: Colors.black87,
-      appBar: AppBar(title: Center(child: Text('Moedas')),
+      appBar: AppBar(
+        title: Text('Moedas'),
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.settings,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          )
+        ],
         ),
       body: ListView(
         children: [
           TextoPesquisa(),
+          CardMoeda(moeda: Moedas('ariany', 'subtitulo'),),
+          CardMoeda(moeda: Moedas('agatha', 'subtitulo'),),
           CardMoeda(moeda: Moedas('moeda', 'subtitulo'),),
           CardMoeda(moeda: Moedas('moeda', 'subtitulo'),),
           CardMoeda(moeda: Moedas('moeda', 'subtitulo'),),
           CardMoeda(moeda: Moedas('moeda', 'subtitulo'),),
-          CardMoeda(moeda: Moedas('moeda', 'subtitulo'),),
-          CardMoeda(moeda: Moedas('moeda', 'subtitulo'),),
-          ElevatedButton(onPressed: () {
-            Navigator.pop(context);
-          }, child: Text('Voltar'))
         ],
       )
       ),
       );
     }
 }
-/*
-class ListaCardMoeda extends StatefulWidget{
 
-  final List<Moedas> _moeda = [];
 
-  @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    return ListaCardMoedaState();
-  }
-}
-
-class ListaCardMoedaState extends State<ListaCardMoeda> {
-
-  @override
-  Widget build(BuildContext context) {
-    widget._moeda.add(Moedas('moeda', 'subtitulo'));
-    // TODO: implement build
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: ListView.builder(
-                itemCount: widget._moeda.length,
-                itemBuilder: (context, index) {
-                  final cardMoeda = widget._moeda[index];
-                  return CardMoeda(moeda: cardMoeda);
-                },
-              ),
-    );
-  }
-}
-*/
 class Moedas{
   final String moeda;
   final String subtitulo;
@@ -93,8 +73,13 @@ class CardMoeda extends StatelessWidget{
       padding: const EdgeInsets.all(8.0),
       child: Card(
               child: ListTile(
-                leading: Icon( Icons.label, ),
-                title: Text(moeda.moeda),
+                leading: IconButton(
+                  icon: Icon( Icons.chevron_right, ), 
+                  alignment: Alignment.center,
+                  onPressed: () {
+                  },  
+                ),
+                title: Text(moeda.moeda,),
                 subtitle: Text(moeda.subtitulo),
               )
             )
