@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:powercoins/telaCotacao.dart';
 import 'package:powercoins/telaMoedas.dart';
@@ -52,14 +54,19 @@ class telaLogin extends StatelessWidget{
         ),
         Editor(controlador: controladorCampoNome, label: 'Nome Completo', tipoSenha: false),
         Editor(controlador: controladorCampoSenha, label: 'Senha', tipoSenha: true),
-        ElevatedButton(onPressed: (){}, child: Text('Log in')),
+        ElevatedButton(onPressed: (){
+          Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => telaMoedas()),
+                  );
+        }, child: Text('Log in')),
         Column(
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextButton(
                   style: TextButton.styleFrom(
-                    textStyle: TextStyle(color: Colors.white, fontSize: 15)   
+                    textStyle: TextStyle(color: Colors.white, fontSize: 15),
                   ),
                   onPressed: () {
                     Navigator.push(
@@ -146,7 +153,18 @@ class Editor extends StatelessWidget{
                   style: TextStyle(color: Colors.white),
                   obscureText: tipoSenha, //oculta letras como senha
                   decoration: InputDecoration(
-                    border: OutlineInputBorder(),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey, width: 7.0),
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide: const BorderSide(width: 7.0, color: Colors.grey),
+                      borderRadius: BorderRadius.circular(25),   
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(width: 7.0, color: Colors.grey),
+                      borderRadius: BorderRadius.circular(25),   
+                    ),
                     labelText: label,
                   ),
                 ),
@@ -183,23 +201,75 @@ class telaEsqueciSenha extends StatelessWidget{
       home: Scaffold(
       backgroundColor: Colors.black87,
       body: Column(
-      children: [
-        logo(),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(30.0, 8.0, 8.0, 8.0),
-          child: Text(
-            'REDEFINIR SENHA',
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic,),
-            textAlign: TextAlign.center,                      
+      children: [  
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(8.0, 200.0, 8.0, 8.0),
+              child: Text(
+                'REDEFINIR SENHA',
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic,),
+                textAlign: TextAlign.center,                      
+              ),
+            ),
           ),
-        ),
-        Editor(controlador: controladorEmailTrocaSenha, label: 'E-mail', tipoSenha: false),
-        Editor(controlador: controladorTrocaSenha, label: 'Nova senha', tipoSenha: true),
-        Editor(controlador: controladorTrocaSenhaConfirma, label: 'Confima senha', tipoSenha: true),
-        ElevatedButton(onPressed: (){
-          Navigator.pop(context);
-        }, child: Text('Trocar Senha')),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(8.0, 45.0, 20.0, 20.0),
+          child: Column(
+            children: [
+                Editor(controlador: controladorEmailTrocaSenha, label: 'E-mail', tipoSenha: false),
+                Editor(controlador: controladorTrocaSenha, label: 'Nova senha', tipoSenha: true),
+                Editor(controlador: controladorTrocaSenhaConfirma, label: 'Confimar senha', tipoSenha: true),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                  onPressed: () {
+                    if(controladorTrocaSenha.value.text != controladorTrocaSenhaConfirma.value.text){
+                        showDialog<String>(
+                        context: context,
+                        builder: (BuildContext context) => AlertDialog(
+                          title: const Text('Senhas incorretas'),
+                          content: const Text('senha não compatíveis'),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () => Navigator.pop(context, 'OK'),
+                              child: const Text('OK'),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+                    else{
+                      Navigator.pop(context);
+                    }},
+                  style: ButtonStyle(
+                  shape: MaterialStateProperty.all(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                      side: BorderSide(width: 10.0, color: Colors.yellow)
+                    ),
+                  ),),
+                  child: const Text('Concluir'),
+                ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: ElevatedButton(onPressed: (){
+                    Navigator.pop(context);
+                  },
+                  style: ButtonStyle(
+                  shape: MaterialStateProperty.all(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                      side: BorderSide(width: 10.0, color: Colors.yellow)
+                    ),
+                  ),
+                ),
+                child: Text('Voltar')),
+                ),
+            ],
+          )
+        )
       ],
       ),
     ),
@@ -226,11 +296,10 @@ class telaCadastro extends StatelessWidget {
       backgroundColor: Colors.black87,
       body: Column(
       children: [
-        logo(),
         Padding(
-          padding: const EdgeInsets.fromLTRB(30.0, 8.0, 8.0, 8.0),
+          padding: const EdgeInsets.fromLTRB(8.0, 150.0, 8.0, 8.0),
           child: Text(
-            'THE POWER OF COINS',
+            'CRIE SUA CONTA',
             overflow: TextOverflow.ellipsis,
             style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic,),
             textAlign: TextAlign.center,                      
@@ -240,12 +309,78 @@ class telaCadastro extends StatelessWidget {
         Editor(controlador: cadastreEmail, label: 'E-mail', tipoSenha: false),
         Editor(controlador: cadastreSenha, label: 'Senha', tipoSenha: true),
         Editor(controlador: cadastreConfirmarSenha, label: 'Confirmar Senha', tipoSenha: true),
-        ElevatedButton(onPressed: (){
-          Navigator.pop(context);
-        }, child: Text('Cadastrar')),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ElevatedButton(
+          onPressed: () {
+            if(cadastreSenha.value.text != cadastreConfirmarSenha.value.text){
+                showDialog<String>(
+                context: context,
+                builder: (BuildContext context) => AlertDialog(
+                  title: const Text('Senhas incorretas'),
+                  content: const Text('senha não compatíveis'),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, 'OK'),
+                      child: const Text('OK'),
+                    ),
+                  ],
+                ),
+              );
+            }
+            else{
+              Navigator.pop(context);
+            }},
+          style: ButtonStyle(
+          shape: MaterialStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0),
+              side: BorderSide(width: 10.0, color: Colors.yellow)
+            ),
+          ),),
+          child: const Text('Cadastrar'),
+        ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ElevatedButton(onPressed: (){
+            Navigator.pop(context);
+          },
+          style: ButtonStyle(
+          shape: MaterialStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0),
+              side: BorderSide(width: 10.0, color: Colors.yellow)
+            ),
+          ),
+        ),
+        child: Text('Voltar')),
+        )
       ],
       ),
     ),
   );
+  }
+}
+
+class DialogExample extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: () => showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: const Text('Senhas incorretas'),
+          content: const Text('As senhas estão divergentes'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'OK'),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      ),
+      child: const Text('Show Dialog'),
+    );
   }
 }

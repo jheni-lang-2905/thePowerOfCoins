@@ -115,9 +115,7 @@ class CriptoMoeda extends StatelessWidget{
   } 
 }
 
-
-
-  
+ 
 class _Infections {
   _Infections(this.year, this.victims);
   
