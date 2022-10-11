@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:powercoins/telaCotacao.dart';
 import 'package:powercoins/telaMoedas.dart';
@@ -49,21 +47,40 @@ class telaLogin extends StatelessWidget{
             'THE POWER OF COINS',
             overflow: TextOverflow.ellipsis,
             style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic,),
-            textAlign: TextAlign.center,                      
+            textAlign: TextAlign.center,
           ),
         ),
         Editor(controlador: controladorCampoNome, label: 'Nome Completo', tipoSenha: false),
         Editor(controlador: controladorCampoSenha, label: 'Senha', tipoSenha: true),
         ElevatedButton(onPressed: (){
-          Navigator.push(
+          String nome = controladorCampoNome.text.toString();
+          String senha = controladorCampoSenha.text.toString();
+          debugPrint(nome);
+          if(nome == 'admin' && senha == '123'){
+            Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => telaMoedas()),
                   );
+          }else{
+            showDialog<String>(
+                        context: context,
+                        builder: (BuildContext context) => AlertDialog(
+                          title: const Text('Usuário não encontrado'),
+                          content: const Text('Realize seu cadastro.'),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () => Navigator.pop(context, 'OK'),
+                              child: const Text('OK'),
+                            ),
+                          ],
+                        ),
+                      );
+          }
         }, child: Text('Log in')),
         Column(
           children: [
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(20.0),
               child: TextButton(
                   style: TextButton.styleFrom(
                     textStyle: TextStyle(color: Colors.white, fontSize: 15),
@@ -78,7 +95,7 @@ class telaLogin extends StatelessWidget{
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(20.0),
               child: 
               TextButton(
                   style: TextButton.styleFrom(
@@ -92,39 +109,7 @@ class telaLogin extends StatelessWidget{
                   },
                   child: const Text('Crie sua conta'),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: 
-              TextButton(
-                  style: TextButton.styleFrom(
-                    textStyle: TextStyle(color: Colors.white, fontSize: 15)   
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => telaMoedas()),
-                    );
-                  },
-                  child: const Text('Tela de moeda temporária'),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: 
-              TextButton(
-                  style: TextButton.styleFrom(
-                    textStyle: TextStyle(color: Colors.white, fontSize: 15)   
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => telaCotacao()),
-                    );
-                  },
-                  child: const Text('Tela de cotacao temporaria'),
-              ),
-            ),
+            )
           ],
         ),
       ],

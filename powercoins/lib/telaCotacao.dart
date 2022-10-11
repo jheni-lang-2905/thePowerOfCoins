@@ -1,9 +1,15 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:powercoins/telaMoedas.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:intl/intl.dart';
 
 class telaCotacao extends StatelessWidget{
+
+  final String moedaName;
+  final String moedaPreco;
+
+  const telaCotacao({super.key, required this.moedaName, required this.moedaPreco});
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -16,22 +22,11 @@ class telaCotacao extends StatelessWidget{
       home: Scaffold(
       backgroundColor: Colors.black87,
         appBar: AppBar(
-          title: Text('Cotação'),
-          actions: [
-                    IconButton(
-                      icon: Icon(
-                        Icons.settings,
-                        color: Colors.white,
-                      ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    )
-          ],
+          title: Center(child: Text('Cotação')),
         ),
       body: Column(
         children: [
-          CriptoMoeda(criptoValor: 10.0, criptomoeda: 'BTC',),
+          CriptoMoeda(criptoValor: double.parse(moedaPreco), criptomoeda: moedaName,),
           Center(child: Grafico()),
           Padding(
             padding: const EdgeInsets.all(40.0),
@@ -51,6 +46,7 @@ class telaCotacao extends StatelessWidget{
     );
   }
 }
+
 
 class Grafico extends StatelessWidget{
   @override
@@ -114,6 +110,35 @@ class CriptoMoeda extends StatelessWidget{
           );
   } 
 }
+
+class dadosMoeda extends StatelessWidget{
+
+  final String moedaPesquisa;
+
+  const dadosMoeda({super.key, required this.moedaPesquisa});
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return MaterialApp(
+      home: Scaffold(
+      body: FutureBuilder<dynamic>(
+            future: retornaDadosMoeda(moedaPesquisa),
+            builder: (context, snapshot) {
+              if(snapshot.hasData){
+                  var low = snapshot.data['low'];
+                  var high = snapshot.data['high'];
+                  NumberFormat formatter = NumberFormat("000.00");
+                  double initialValue = double.parse(high);
+                  String doubleParse = formatter.format(initialValue);
+                  return telaCotacao(moedaName: snapshot.data['moeda'], moedaPreco: doubleParse,);  
+              };
+              return Center(child: CircularProgressIndicator()); 
+            },),),);
+  }
+
+}
+
 
  
 class _Infections {
