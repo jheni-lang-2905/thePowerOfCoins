@@ -38,11 +38,12 @@ class telaLogin extends StatelessWidget{
     // ignore: prefer_const_constructors
     home: Scaffold(
     backgroundColor: Colors.black87,
-    body: Column(
+    body: SingleChildScrollView(
+      child: Column(
       children: [
-        logo(),
+        Container(child: logo()),
         Padding(
-          padding: const EdgeInsets.fromLTRB(30.0, 8.0, 8.0, 8.0),
+          padding: const EdgeInsets.all(8.0),
           child: Text(
             'THE POWER OF COINS',
             overflow: TextOverflow.ellipsis,
@@ -80,7 +81,7 @@ class telaLogin extends StatelessWidget{
         Column(
           children: [
             Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.all(8.0),
               child: TextButton(
                   style: TextButton.styleFrom(
                     textStyle: TextStyle(color: Colors.white, fontSize: 15),
@@ -95,7 +96,7 @@ class telaLogin extends StatelessWidget{
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.all(8.0),
               child: 
               TextButton(
                   style: TextButton.styleFrom(
@@ -115,7 +116,7 @@ class telaLogin extends StatelessWidget{
       ],
       ),
     ),
-  );
+  ));
   }
 }
 
@@ -131,7 +132,9 @@ class Editor extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Padding(
+    return SingleChildScrollView(
+          child: 
+          Padding(
           padding: const EdgeInsets.all(20.0),
           child: TextField(
             controller: controlador,
@@ -153,7 +156,7 @@ class Editor extends StatelessWidget{
                     labelText: label,
                   ),
                 ),
-          );
+          ));
   }
 }
 
@@ -161,10 +164,13 @@ class logo extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-   return Padding(
-                padding: EdgeInsets.only(top: 100, left: 150, right: 150, bottom: 50),
-                child: Image.asset('imagens/logo.jpg'),
-          );
+   return SingleChildScrollView(
+      child:
+          Padding(
+                    padding: EdgeInsets.only(top: 100, left: 150, right: 150, bottom: 50),
+                    child: Image.asset('imagens/logo.jpg'),
+              ),
+      );
   }
 }
 
@@ -185,7 +191,8 @@ class telaEsqueciSenha extends StatelessWidget{
       ),
       home: Scaffold(
       backgroundColor: Colors.black87,
-      body: Column(
+      body: SingleChildScrollView(
+      child:Column(
       children: [  
           Center(
             child: Padding(
@@ -258,7 +265,7 @@ class telaEsqueciSenha extends StatelessWidget{
       ],
       ),
     ),
-  );
+  ));
   }
 }
 
@@ -279,7 +286,8 @@ class telaCadastro extends StatelessWidget {
       ),
       home: Scaffold(
       backgroundColor: Colors.black87,
-      body: Column(
+      body: SingleChildScrollView(
+      child:Column(
       children: [
         Padding(
           padding: const EdgeInsets.fromLTRB(8.0, 150.0, 8.0, 8.0),
@@ -344,7 +352,7 @@ class telaCadastro extends StatelessWidget {
       ],
       ),
     ),
-  );
+  ));
   }
 }
 

@@ -6,6 +6,7 @@ import 'package:powercoins/main.dart';
 import 'package:powercoins/telaCotacao.dart';
 
 class telaMoedas extends StatelessWidget{
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -22,21 +23,7 @@ class telaMoedas extends StatelessWidget{
         ),
       body: ListView(
         children: [
-          TextoPesquisa(),
-          CardMoeda(moedaPesquisa: "AAVE", subtitulo: 'Aave',),
-          CardMoeda(moedaPesquisa: "BTC", subtitulo: 'Bitcoin',),
-          CardMoeda(moedaPesquisa: "ENS", subtitulo: 'Ethereum Name Service',),
-          CardMoeda(moedaPesquisa: "ETH", subtitulo: 'Ethereum',),
-          CardMoeda(moedaPesquisa: "USDP", subtitulo: 'Pax Dollar',),
-          CardMoeda(moedaPesquisa: "USDC", subtitulo: 'USD Coin',),
-          CardMoeda(moedaPesquisa: "SRM", subtitulo: 'Serum',),
-          CardMoeda(moedaPesquisa: "NFT19", subtitulo: 'Teleton',),
-          CardMoeda(moedaPesquisa: "MVI", subtitulo: 'Metaverse Index',),
-          CardMoeda(moedaPesquisa: "MKR", subtitulo: 'Maker',),
-          CardMoeda(moedaPesquisa: "BICO", subtitulo: 'Biconomy',),
-          CardMoeda(moedaPesquisa: "BCH", subtitulo: 'Bitcoin Cash',),
-          CardMoeda(moedaPesquisa: "API3", subtitulo: 'API3',),
-          CardMoeda(moedaPesquisa: "ALCX", subtitulo: 'Alchemix',),
+          Pesquisa(),
         ],
       )
       ),
@@ -113,22 +100,49 @@ class CardMoeda extends StatelessWidget{
   }
 }
 
-class TextoPesquisa extends StatelessWidget{
 
-  final TextEditingController controler = TextEditingController();
+class Pesquisa extends StatefulWidget{
+  final TextEditingController controlerPesquisa = TextEditingController();
+  final List<String> listaMoeda = ["AAVE", "BTC", "ENS", "ETH", "USDP", "USDC", "SRM", "NFT19", "MVI", "MKR", "BICO", "BCH", "API3", "ALCX"];
+  
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+      return TextoPesquisa();
+    }
+}
 
+
+class TextoPesquisa extends State<Pesquisa>{
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: TextField(
-        controller: controler,
-        decoration: InputDecoration(
-            icon: Icon(Icons.manage_search,),
-            labelText: 'Pesquise sua moeda',
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: TextField(
+            controller: widget.controlerPesquisa,
+            decoration: InputDecoration(
+                icon: Icon(Icons.manage_search,),
+                labelText: 'Pesquise sua moeda',
+            ),
+          ),
         ),
-      ),
+        CardMoeda(moedaPesquisa: "BTC", subtitulo: 'Bitcoin',),
+        CardMoeda(moedaPesquisa: "ENS", subtitulo: 'Ethereum Name Service',),
+        CardMoeda(moedaPesquisa: "ETH", subtitulo: 'Ethereum',),
+        CardMoeda(moedaPesquisa: "USDP", subtitulo: 'Pax Dollar',),
+        CardMoeda(moedaPesquisa: "USDC", subtitulo: 'USD Coin',),
+        CardMoeda(moedaPesquisa: "SRM", subtitulo: 'Serum',),
+        CardMoeda(moedaPesquisa: "NFT19", subtitulo: 'Teleton',),
+        CardMoeda(moedaPesquisa: "MVI", subtitulo: 'Metaverse Index',),
+        CardMoeda(moedaPesquisa: "MKR", subtitulo: 'Maker',),
+        CardMoeda(moedaPesquisa: "BICO", subtitulo: 'Biconomy',),
+        CardMoeda(moedaPesquisa: "BCH", subtitulo: 'Bitcoin Cash',),
+        CardMoeda(moedaPesquisa: "API3", subtitulo: 'API3',),
+        CardMoeda(moedaPesquisa: "ALCX", subtitulo: 'Alchemix',),
+      ],
     );
   }
 }

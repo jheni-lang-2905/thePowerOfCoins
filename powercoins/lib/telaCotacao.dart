@@ -114,6 +114,7 @@ class CriptoMoeda extends StatelessWidget{
 class dadosMoeda extends StatelessWidget{
 
   final String moedaPesquisa;
+  
 
   const dadosMoeda({super.key, required this.moedaPesquisa});
 
